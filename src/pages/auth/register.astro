@@ -1,0 +1,101 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Registro - Hotel Paradise">
+  <main class="container mx-auto px-4 py-8">
+    <div class="max-w-md mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md">
+      <h1 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Crear Cuenta</h1>
+
+      <button
+        id="google-register"
+        class="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white px-4 py-2 rounded-md flex items-center justify-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors mb-4"
+      >
+        <img src="https://www.google.com/favicon.ico" alt="Google" class="w-5 h-5" />
+        Registrarse con Google
+      </button>
+
+      <div class="relative my-6">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+        </div>
+        <div class="relative flex justify-center text-sm">
+          <span class="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">O</span>
+        </div>
+      </div>
+
+      <form class="space-y-4">
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre completo</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+          />
+        </div>
+
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+          />
+        </div>
+
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Contraseña</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+        >
+          Crear cuenta
+        </button>
+      </form>
+
+      <p class="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
+        ¿Ya tienes cuenta?
+        <a href="/auth/login" class="text-blue-600 dark:text-blue-400 hover:underline">Inicia sesión</a>
+      </p>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  import { initializeApp } from 'firebase/app';
+  import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  document.getElementById('google-register')?.addEventListener('click', async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      // Redirect to home page or dashboard
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Error al registrarse con Google:', error);
+    }
+  });
+</script>

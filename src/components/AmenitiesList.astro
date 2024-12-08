@@ -1,0 +1,104 @@
+---
+import type { Room } from '../data/rooms';
+
+interface Props {
+  amenities: Room['amenities'];
+}
+
+const { amenities } = Astro.props;
+---
+
+<div class="amenities">
+  <h3>Características y Servicios</h3>
+  <ul>
+    <li>
+      <span class="icon">🛁</span>
+      {amenities.bathrooms} {amenities.bathrooms === 1 ? 'Baño' : 'Baños'}
+    </li>
+    <li>
+      <span class="icon">🛏️</span>
+      {amenities.bedType}
+    </li>
+    <li>
+      <span class="icon">👥</span>
+      Hasta {amenities.maxGuests} huéspedes
+    </li>
+    {amenities.wifi && (
+      <li>
+        <span class="icon">📶</span>
+        WiFi gratuito
+      </li>
+    )}
+    {amenities.tv && (
+      <li>
+        <span class="icon">📺</span>
+        TV Smart
+      </li>
+    )}
+    {amenities.minibar && (
+      <li>
+        <span class="icon">🍷</span>
+        Minibar
+      </li>
+    )}
+    {amenities.airConditioning && (
+      <li>
+        <span class="icon">❄️</span>
+        Aire acondicionado
+      </li>
+    )}
+  </ul>
+
+  <h3>Servicios de Comida</h3>
+  <ul>
+    {amenities.breakfast && (
+      <li>
+        <span class="icon">🍳</span>
+        Desayuno incluido
+      </li>
+    )}
+    {amenities.lunch && (
+      <li>
+        <span class="icon">🍽️</span>
+        Almuerzo incluido
+      </li>
+    )}
+    {amenities.dinner && (
+      <li>
+        <span class="icon">🍖</span>
+        Cena incluida
+      </li>
+    )}
+  </ul>
+</div>
+
+<style>
+  .amenities {
+    background: #f7fafc;
+    padding: 2rem;
+    border-radius: 8px;
+  }
+
+  h3 {
+    color: #2d3748;
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    color: #4a5568;
+  }
+
+  .icon {
+    margin-right: 0.5rem;
+    font-size: 1.25rem;
+  }
+</style>
